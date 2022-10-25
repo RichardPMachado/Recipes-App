@@ -9,6 +9,7 @@ import Done from './Pages/Done';
 import Favorite from './Pages/Favorite';
 import RecipeInProgress from './components/RecipeInProgress';
 import NotFound from './Pages/NotFound';
+import Recipe from './Pages/Recipe';
 
 function App() {
   return (
@@ -22,12 +23,15 @@ function App() {
             path="/meals/:id-da-receita/in-progress"
             component={ RecipeInProgress }
           />
+          <Route path="/meals/:id-da-receita" component={ Recipe } />
 
           <Route exact path="/drinks" component={ Drinks } />
           <Route
             path="/drinks/:id-da-receita/in-progress"
             component={ RecipeInProgress }
           />
+          <Route path="/drinks/:id-da-receita" component={ Recipe } />
+
           <Route exact path="/profile" component={ Profile } />
           <Route exact path="/done-recipes" component={ Done } />
 
