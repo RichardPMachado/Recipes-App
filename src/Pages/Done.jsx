@@ -4,7 +4,7 @@ import Header from '../components/Header';
 export default function Done() {
   return (
     <div>
-      <Header titulo="Done Recipes" />
+      <Header title="Done Recipes" />
     </div>
   );
 }
