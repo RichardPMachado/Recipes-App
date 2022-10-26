@@ -11,10 +11,13 @@ import Favorite from '../Pages/Favorite';
 import Recipe from '../Pages/Recipe';
 // import NotFound from '../Pages/NotFound';
 import RecipeInProgress from '../components/RecipeInProgress';
+import renderWithRouterAndContext from '../helpers/renderWithRouterAndContext';
+import App from '../App';
 
 describe('verificar componente Header', () => {
   const page = 'page-title';
   const profile = 'profile-top-btn';
+  const search = 'search-input';
 
   it('Verifica se os botões e o input estão na tela ao renderizar a pages Meals', () => {
     render(<Meals />);
@@ -29,7 +32,7 @@ describe('verificar componente Header', () => {
     expect(searchTopBtn).toBeInTheDocument();
     userEvent.click(searchTopBtn);
 
-    const searchInput = screen.getByTestId('search-input');
+    const searchInput = screen.getByTestId(search);
     expect(searchInput).toBeInTheDocument();
   });
   it('Verifica se os botões e o input estão na tela ao renderizar a pages Drinks', () => {
@@ -45,7 +48,7 @@ describe('verificar componente Header', () => {
     expect(searchTopBtn).toBeInTheDocument();
     userEvent.click(searchTopBtn);
 
-    const searchInput = screen.getByTestId('search-input');
+    const searchInput = screen.getByTestId(search);
     expect(searchInput).toBeInTheDocument();
   });
   it('Verifica se os botões e o input estão na tela ao renderizar a pages Done', () => {
@@ -86,5 +89,16 @@ describe('verificar componente Header', () => {
 
     const pageTitle = screen.getByText('Recipe In Progress');
     expect(pageTitle).toBeInTheDocument();
+  });
+  it('verificar botão Profile', async () => {
+    renderWithRouterAndContext(<Meals />);
+
+    const pageTitle = screen.getByTestId(page);
+    const profileBtn = screen.getByTestId(profile);
+
+    expect(pageTitle).toBeInTheDocument();
+    expect(profileBtn).toBeInTheDocument();
+
+    userEvent.click(profileBtn);
   });
 });
