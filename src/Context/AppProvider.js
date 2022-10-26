@@ -9,37 +9,34 @@ import AppContext from './AppContext';
 function AppProvider({ children }) {
   const [apiResults, setApiResults] = useState([]);
   // const [drinkEndpoint, setDrinkEndpoint] = useState();
-  const [themeaEndpoint, setThemeaEndpoint] = useState('https://www.themealdb.com/api/json/v1/1/search.php?f=f');
+  const [endpoint, setEndpoint] = useState(null);
 
   // handleInput = ({ target }) => {
   //   const { name, value } = target;
   //   thisetState({ [name]: value }, () => verifyBtn());
   // };
 
-  //   drinksEndpoint = (filter, toSearch) => {
-  //   switch(filter) {
-  //     case "Ingredient" :
-  //       setEndpoint(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${toSearch}`)
-  //       break
-  //     case "Name":
-  //       setEndpoint(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${toSearch}`)
-  //       break
-  //     case "First letter":
-  //       setEndpoint( `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${toSearch}`)
-  //       break
-  //     default :
-  //       null
-  //   }
-  //  }
-
-  const fetchThemeaEndpoint = (filter, toSearch) => {
+  const drinksEndpoint = (filter, toSearch) => {
     switch (filter) {
     case 'ingredient-search':
-      return setThemeaEndpoint(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${toSearch}`);
+      return setEndpoint(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${toSearch}`);
     case 'name-search':
-      return setThemeaEndpoint(`https://www.themealdb.com/api/json/v1/1/search.php?s=${toSearch}`);
+      return setEndpoint(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${toSearch}`);
     case 'first-letter-search':
-      return setThemeaEndpoint(`https://www.themealdb.com/api/json/v1/1/search.php?f=${toSearch}`);
+      return setEndpoint(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${toSearch}`);
+    default:
+      return null;
+    }
+  };
+
+  const themeaEndpoint = (filter, toSearch) => {
+    switch (filter) {
+    case 'ingredient-search':
+      return setEndpoint(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${toSearch}`);
+    case 'name-search':
+      return setEndpoint(`https://www.themealdb.com/api/json/v1/1/search.php?s=${toSearch}`);
+    case 'first-letter-search':
+      return setEndpoint(`https://www.themealdb.com/api/json/v1/1/search.php?f=${toSearch}`);
     default:
       return null;
     }
@@ -48,25 +45,25 @@ function AppProvider({ children }) {
   useEffect(() => {
     const requestAPI = async () => {
       try {
-        const response = await fetch(themeaEndpoint);
-        const { meals } = await response.json();
-        setApiResults(meals);
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        setApiResults(data);
       } catch (error) {
         throw new Error(error);
       }
     };
-    requestAPI();
-  }, [themeaEndpoint]);
+    if (endpoint !== null) {
+      requestAPI();
+    }
+  }, [endpoint]);
 
   const contexto = useMemo(() => ({
     apiResults,
-    fetchThemeaEndpoint,
     themeaEndpoint,
+    drinksEndpoint,
   }), [
     apiResults,
-    themeaEndpoint,
   ]);
-  console.log(contexto);
 
   return (
     <AppContext.Provider value={ contexto }>
