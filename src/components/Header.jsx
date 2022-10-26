@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header({ title }) {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -31,7 +32,7 @@ function Header({ title }) {
             <img src={ searchIcon } alt="search" data-testid="search-top-btn" />
           </button>
           {isDisabled && (
-            <input type="text" data-testid="search-input" />
+            <SearchBar />
           )}
         </>
       )}
@@ -40,7 +41,7 @@ function Header({ title }) {
 }
 
 Header.propTypes = {
-  title: propTypes.string,
+  title: PropTypes.string,
 }.isRequired;
 
 export default Header;
