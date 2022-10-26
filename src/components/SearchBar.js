@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AppContext from '../Context/AppContext';
 
 export default function SearchBar() {
   const [searchValue, setSearchValue] = useState();
   const [filters, setFilters] = useState();
+  const { location: { pathname } } = useHistory();
 
   const context = useContext(AppContext);
 
@@ -11,9 +13,9 @@ export default function SearchBar() {
     if (searchValue.length > 1 && filters === 'first-letter-search') {
       return global.alert('Your search must have only 1 (one) character');
     }
-    context.fetchThemeaEndpoint(filters, searchValue);
+    return pathname === '/drinks' ? context.drinksEndpoint(filters, searchValue)
+      : context.themeaEndpoint(filters, searchValue);
   };
-
   return (
     <div>
       <label htmlFor="search-input">
@@ -61,7 +63,7 @@ export default function SearchBar() {
         data-testid="exec-search-btn"
         onClick={ handleValidationFilter }
       >
-        SERACH
+        SEARCH
       </button>
     </div>
   );
