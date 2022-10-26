@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Footer from '../components/Footer';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 
@@ -29,7 +30,8 @@ function Profile() {
   return (
     <div>
       <Header title="Profile" />
-      { storage && (
+  
+     { storage && (
         <p data-testid="profile-email">{ storage.email}</p>
       )}
       <button
@@ -53,6 +55,8 @@ function Profile() {
       >
         Logout
       </button>
+      <Footer />
+
     </div>
   );
 }

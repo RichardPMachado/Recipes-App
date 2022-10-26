@@ -1,4 +1,6 @@
+
 import React, { useContext } from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import AppContext from '../Context/AppContext';
 
@@ -27,7 +29,9 @@ export default function Drinks() {
   return (
     <div>
       <Header title="Drinks" />
+      <Footer />
       {renderDrinks()}
+
     </div>
   );
 }

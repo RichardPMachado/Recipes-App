@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import AppContext from '../Context/AppContext';
 
 function Meals() {
@@ -27,6 +28,7 @@ function Meals() {
   return (
     <div>
       <Header title="Meals" />
+      <Footer />
       {renderMeals()}
     </div>
   );
