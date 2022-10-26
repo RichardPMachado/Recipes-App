@@ -12,7 +12,6 @@ import Recipe from '../Pages/Recipe';
 // import NotFound from '../Pages/NotFound';
 import RecipeInProgress from '../components/RecipeInProgress';
 import renderWithRouterAndContext from '../helpers/renderWithRouterAndContext';
-import App from '../App';
 
 describe('verificar componente Header', () => {
   const page = 'page-title';

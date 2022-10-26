@@ -26,7 +26,6 @@ function AppProvider({ children }) {
   //       break
   //     case "First letter":
   //       setEndpoint( `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${toSearch}`)
-  //       break
   //     default :
   //       null
   //   }
