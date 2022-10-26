@@ -1,19 +1,38 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AppContext from '../Context/AppContext';
 
 export default function SearchBar() {
   const [searchValue, setSearchValue] = useState();
   const [filters, setFilters] = useState();
-
+  const history = useHistory();
   const context = useContext(AppContext);
+  console.log(context.apiResults.meals);
+  useEffect(() => {
+    const redirect = () => {
+      const { apiResults } = context;
+      if (apiResults.drinks) {
+        const { drinks } = apiResults;
+        return apiResults.drinks.length === 1
+          && history.push(`/drinks/${drinks[0].idDrink}`);
+      }
+      if (apiResults.meals) {
+        const { meals } = apiResults;
+        return apiResults.meals.length === 1
+          && history.push(`/meals/${meals[0].idMeal}`);
+      }
+    };
+    redirect();
+  }, [context, history]);
 
   const handleValidationFilter = () => {
+    const { location: { pathname } } = history;
     if (searchValue.length > 1 && filters === 'first-letter-search') {
       return global.alert('Your search must have only 1 (one) character');
     }
-    context.fetchThemeaEndpoint(filters, searchValue);
+    return pathname === '/drinks' ? context.drinksEndpoint(filters, searchValue)
+      : context.themeaEndpoint(filters, searchValue);
   };
-
   return (
     <div>
       <label htmlFor="search-input">
@@ -61,7 +80,7 @@ export default function SearchBar() {
         data-testid="exec-search-btn"
         onClick={ handleValidationFilter }
       >
-        SERACH
+        SEARCH
       </button>
     </div>
   );
