@@ -7,7 +7,7 @@ export default function SearchBar() {
   const [filters, setFilters] = useState();
   const history = useHistory();
   const context = useContext(AppContext);
-  console.log(context.apiResults.meals);
+
   useEffect(() => {
     const redirect = () => {
       const { apiResults } = context;
@@ -21,6 +21,8 @@ export default function SearchBar() {
         return apiResults.meals.length === 1
           && history.push(`/meals/${meals[0].idMeal}`);
       }
+      return (apiResults.drinks === null || apiResults.meals === null)
+      && global.alert('Sorry, we haven\'t found any recipes for these filters.');
     };
     redirect();
   }, [context, history]);
