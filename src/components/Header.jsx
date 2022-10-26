@@ -5,10 +5,10 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-function Header({ title }) {
+function Header({ title, children }) {
   const [isDisabled, setIsDisabled] = useState(false);
   const history = useHistory();
-
+  console.log(children);
   const hendleClickProfile = () => {
     const path = 'profile';
     history.push(path);
@@ -28,8 +28,10 @@ function Header({ title }) {
           <button
             type="button"
             onClick={ handleDisabledInput }
+            data-testid="search-top-btn"
+            src={ searchIcon }
           >
-            <img src={ searchIcon } alt="search" data-testid="search-top-btn" />
+            <img src={ searchIcon } alt="search" />
           </button>
           {isDisabled && (
             <SearchBar />
