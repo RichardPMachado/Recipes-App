@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
@@ -41,7 +41,7 @@ function Header({ title }) {
 }
 
 Header.propTypes = {
-  title: propTypes.string,
+  title: PropTypes.string,
 }.isRequired;
 
 export default Header;
