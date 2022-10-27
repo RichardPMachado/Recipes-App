@@ -2,8 +2,8 @@ import React from 'react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render } from '@testing-library/react';
-import AppProvider from '../Context/AppProvider';
-import AppContext from '../Context/AppContext';
+import AppProvider from '../../Context/AppProvider';
+import AppContext from '../../Context/AppContext';
 
 const renderWithRouterAndContext = (component, location) => {
   const history = createMemoryHistory();
