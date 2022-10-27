@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Footer from '../components/Footer';
 import { useHistory } from 'react-router-dom';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Profile() {
@@ -30,8 +30,7 @@ function Profile() {
   return (
     <div>
       <Header title="Profile" />
-  
-     { storage && (
+      { storage && (
         <p data-testid="profile-email">{ storage.email}</p>
       )}
       <button
