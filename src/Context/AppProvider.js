@@ -61,8 +61,6 @@ function AppProvider({ children }) {
     }
   }, [endpoint]);
 
-  console.log(apiResults);
-
   const contexto = useMemo(() => ({
     apiResults,
     themeaEndpoint,

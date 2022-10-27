@@ -11,6 +11,7 @@ import RecipeInProgress from './components/RecipeInProgress';
 import NotFound from './Pages/NotFound';
 // import Recipe from './Pages/Recipe';
 import RecipeDetails from './Pages/RecipeDetails';
+import './App.css';
 
 function App() {
   return (

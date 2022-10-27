@@ -1,4 +1,119 @@
-.meals {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+li {
+  list-style-type: none;
+}
+
+.detailsContainer {
+  border: 2px solid black;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.recipeContainer {
+  background-color: lightgrey;
+  display: flex;
+  border: 2px solid red;
+  width: 60%;
+  height: 100%;
+  flex-wrap: wrap;
+}
+
+.detailsHeader {
+  margin-top: 2%;
+  display: flex;
+  border: 2px solid green;
+  align-self:flex-start;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  height: 12%;
+  justify-content: center;
+}
+
+.imageContent {
+  display: flex;
+  border: 2px solid grey;
+  width: 100%;
+  flex-direction: column;
+  align-self:flex-start;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+}
+
+.recipeDetailsImg {
+  display: flex;
+  border: 2px solid blue;
+  width: 15%;
+}
+
+
+.instructions {
+  display: flex;
+  border: 2px solid green;
+  width: 30%;
+  height: 40%;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: right; */
+  flex-wrap: nowrap;
+}
+
+.instructions p {
+  font-size: 70%;
+  flex-wrap: nowrap;
+
+}
+
+.ingredients {
+  display: flex;
+  border: 2px solid green;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 30%;
+  height: 40%;
+}
+
+.recomendationContainer {
+  display: flex;
+  /* position: relative; */
+  border: 2px solid blue;
+  width: 40%;
+  height: 20%;
+  overflow-x:auto;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.recommendationcard {
+  display: flex;
+  border: 2px solid red;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
+.recommendationcard h4 {
+  font-size: small;
+  width: 10%;
+}
+
+.recomendedDetailsImg {
+  width: 65%;
+  /* height: 70%; */
+}
+
+/* .meals {
   align-items: center;
   background: #0fa36b;
   color: #464646;
@@ -8,12 +123,12 @@
   height: 100vh;
   justify-content: center;
   width: 100%;
-}
+} */
 
-.rocksGlass {
+/* .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
-}
+} */
 
 /*
 #iceLeft {
@@ -29,7 +144,7 @@
 }
 */
 
-.meals > .logo {
+/* .meals > .logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;
   font-family: Montserrat , sans-serif;
@@ -65,4 +180,4 @@
   100% {
     transform: rotate(-10deg);
   }
-}
+} */
