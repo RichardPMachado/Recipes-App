@@ -24,6 +24,8 @@ function AppProvider({ children }) {
       return setEndpoint(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${toSearch}`);
     case 'first-letter-search':
       return setEndpoint(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${toSearch}`);
+    case 'recipe-id':
+      return setEndpoint(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${toSearch}`);
     default:
       return null;
     }
@@ -37,6 +39,8 @@ function AppProvider({ children }) {
       return setEndpoint(`https://www.themealdb.com/api/json/v1/1/search.php?s=${toSearch}`);
     case 'first-letter-search':
       return setEndpoint(`https://www.themealdb.com/api/json/v1/1/search.php?f=${toSearch}`);
+    case 'recipe-id':
+      return setEndpoint(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${toSearch}`);
     default:
       return null;
     }
@@ -56,6 +60,8 @@ function AppProvider({ children }) {
       requestAPI();
     }
   }, [endpoint]);
+
+  console.log(apiResults);
 
   const contexto = useMemo(() => ({
     apiResults,
