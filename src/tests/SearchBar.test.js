@@ -3,7 +3,7 @@ import { screen, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import SearchBar from '../components/SearchBar';
-import renderWithRouterAndContext from '../helpers/renderWithRouterAndContext';
+import renderWithRouterAndContext from './helper/renderWithRouterAndContext';
 
 const getElement = ((scr) => {
   const searchImput = scr.getByTestId('search-input');
