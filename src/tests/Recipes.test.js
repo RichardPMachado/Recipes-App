@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderWithRouterAndContext from '../helpers/renderWithRouterAndContext';
+import renderWithRouter from './helper/renderWithRouter';
 import App from '../App';
 import mealCategories from '../../cypress/mocks/mealCategories';
 
@@ -12,7 +12,7 @@ describe('Testando componentes de Recipes.js', () => {
   });
   afterEach(() => jest.clearAllMocks());
   test('verifica se botões de filtros meal aparecem na tela', async () => {
-    renderWithRouterAndContext(<App />);
+    renderWithRouter(<App />);
     const emailInput = screen.getByRole('textbox');
     const passInput = screen.getByPlaceholderText(/password/i);
     const btnSubmit = screen.getByRole('button', { name: /enter/i });

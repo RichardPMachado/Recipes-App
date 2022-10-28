@@ -1,15 +1,14 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderWithRouterAndContext from '../helpers/renderWithRouterAndContext';
+import renderWithRouter from './helper/renderWithRouter';
 import App from '../App';
-// import mealCategories from '../../cypress/mocks/mealCategories';
 import drinkCategories from '../../cypress/mocks/drinkCategories';
 
 test('verifica se botões de filtros drincks aparecem na tela', async () => {
   global.fetch = jest.fn(() => Promise.resolve({
     json: () => Promise.resolve(drinkCategories),
   }));
-  renderWithRouterAndContext(<App />);
+  renderWithRouter(<App />);
   const emailInput = screen.getByRole('textbox');
   const passInput = screen.getByPlaceholderText(/password/i);
   const btnSubmit = screen.getByRole('button', { name: /enter/i });
