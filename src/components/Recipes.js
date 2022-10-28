@@ -10,7 +10,6 @@ function Recipes() {
   const { location } = useHistory();
 
   const handleClickAll = () => {
-    console.log(null);
     setEndpoint(null);
     setFilterEndpoint(null);
   };
@@ -48,7 +47,7 @@ function Recipes() {
       }
     };
     fetchWithLocation();
-  }, []);
+  }, [location.pathname]);
 
   return (
     <div>

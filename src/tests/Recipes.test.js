@@ -1,18 +1,27 @@
 import { screen } from '@testing-library/react';
-import Meals from '../Pages/Meals';
-// import renderWithRouter from './helper/renderWithRouter';
+import userEvent from '@testing-library/user-event';
 import renderWithRouterAndContext from '../helpers/renderWithRouterAndContext';
-import meals from '../../cypress/mocks/meals';
-// import App from '../App';
-// import Recipes from '../components/Recipes';
+import App from '../App';
+import mealCategories from '../../cypress/mocks/mealCategories';
 
 describe('Testando componentes de Recipes.js', () => {
-  test('verifica se botões de filtros aparecem na tela', async () => {
+  beforeEach(() => {
     global.fetch = jest.fn(() => Promise.resolve({
-      json: () => Promise.resolve(meals),
+      json: () => Promise.resolve(mealCategories),
     }));
-    renderWithRouterAndContext(<Meals />);
-    const btnBeef = screen.getByRole('button', { name: /beef/i });
+  });
+  afterEach(() => jest.clearAllMocks());
+  test('verifica se botões de filtros meal aparecem na tela', async () => {
+    renderWithRouterAndContext(<App />);
+    const emailInput = screen.getByRole('textbox');
+    const passInput = screen.getByPlaceholderText(/password/i);
+    const btnSubmit = screen.getByRole('button', { name: /enter/i });
+    userEvent.type(emailInput, 'teste@gmail.com');
+    userEvent.type(passInput, '1234567');
+    userEvent.click(btnSubmit);
+    const btnBeef = await screen.findByRole('button', { name: /beef/i });
     expect(btnBeef).toBeInTheDocument();
+    expect(global.fetch).toHaveBeenCalledTimes(2);
+    userEvent.click(btnBeef);
   });
 });

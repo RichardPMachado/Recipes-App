@@ -69,6 +69,7 @@ function AppProvider({ children }) {
   }), [
     apiResults,
     filterEndpoint,
+    endpoint,
   ]);
 
   return (
