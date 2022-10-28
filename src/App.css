@@ -129,6 +129,10 @@ li {
   width: 30%;
 }
 
+.carousel {
+  margin-left: 25%;
+}
+
 .recommendationcard h4 {
   font-size: small;
   width: 10%;
