@@ -1,5 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import Carousel from 'react-bootstrap/Carousel';
+// import Button from 'react-bootstrap/Button';
 import AppContext from '../Context/AppContext';
 
 export default function RecipeDetails() {
@@ -7,6 +9,8 @@ export default function RecipeDetails() {
   const context = useContext(AppContext);
   const history = useHistory();
   const [type, setType] = useState();
+  const [recomended, setRecomended] = useState();
+
   useEffect(() => {
     const setRecipeEndpoint = () => {
       const { location: { pathname } } = history;
@@ -17,6 +21,18 @@ export default function RecipeDetails() {
     };
     setRecipeEndpoint();
   }, [context, history, params]);
+
+  useEffect(() => {
+    if (type) {
+      const fetchRecomendations = async (recomendationFor) => {
+        const ENDPOINT = recomendationFor === 'drinks' ? 'themealdb' : 'thecocktaildb';
+        const response = await fetch(`https://www.${ENDPOINT}.com/api/json/v1/1/search.php?s=`);
+        const recomendation = await response.json();
+        setRecomended(recomendation);
+      };
+      fetchRecomendations(type);
+    }
+  }, [type]);
 
   const ingredientsAndMeasure = (obj) => {
     const measureKeys = Object.keys(obj).filter((key) => key.startsWith('strMeasure'));
@@ -29,6 +45,32 @@ export default function RecipeDetails() {
       ingredients,
       measures,
     };
+  };
+
+  const renderRecomendedItens = (recipeType) => {
+    const recomendationToRender = 6;
+    recipeType = recipeType === 'drinks' ? 'meals' : 'drinks';
+    return recomended[recipeType].map((iten, index) => index < recomendationToRender && (
+      <Carousel.Item
+        key={ index }
+        data-testid={ `${index}-recommendation-card` }
+        className="recommendationcard"
+        data-interval="false"
+      >
+        <h4
+          data-testid={ `${index}-recommendation-title` }
+        >
+          {recipeType === 'meals' ? iten.strMeal : iten.strDrink}
+        </h4>
+        <img
+          className="recomendedDetailsImg"
+          data-testid="recipe-photo"
+          src={ recipeType === 'meals' ? iten.strMealThumb : iten.strDrinkThumb }
+          alt={ recipeType === 'meals' ? iten.strMeal : iten.strDrink }
+          width="10px"
+        />
+      </Carousel.Item>
+    ));
   };
 
   const renderIngredients = (obj) => {
@@ -50,27 +92,42 @@ export default function RecipeDetails() {
     const sliceUrl = 'https://www.youtube.com/watch?v='.length;
     const videoId = recipeType === 'meals' && recipe.strYoutube.slice(sliceUrl);
     return (
-      <div>
-        <h3
-          data-testid="recipe-title"
-        >
-          {recipeType === 'meals' ? recipe.strMeal : recipe.strDrink}
-        </h3>
-        <h4
-          data-testid="recipe-category"
-        >
-          {recipeType === 'meals' ? recipe.strCategory : recipe.strAlcoholic}
-        </h4>
-        <img
-          data-testid="recipe-photo"
-          src={ recipeType === 'meals' ? recipe.strMealThumb : recipe.strDrinkThumb }
-          alt={ recipeType === 'meals' ? recipe.strMeal : recipe.strDrink }
-        />
-        <ul>
-          {renderIngredients(recipe)}
-        </ul>
-        <div data-testid="instructions">
-          {recipe.strInstructions}
+      <div className="recipeContainer">
+        <div className="detailsHeader">
+          <h2
+            data-testid="recipe-title"
+          >
+            {recipeType === 'meals' ? recipe.strMeal : recipe.strDrink}
+          </h2>
+          <h4
+            data-testid="recipe-category"
+          >
+            {recipeType === 'meals' ? recipe.strCategory : recipe.strAlcoholic}
+          </h4>
+        </div>
+        <div className="imageContent">
+          <img
+            className="recipeDetailsImg"
+            data-testid="recipe-photo"
+            src={
+              recipeType === 'meals' ? recipe
+                .strMealThumb : recipe
+                .strDrinkThumb
+            }
+            alt={ recipeType === 'meals' ? recipe.strMeal : recipe.strDrink }
+          />
+        </div>
+        <div className="ingredients">
+          <h4> Ingredientes </h4>
+          <ul>
+            {renderIngredients(recipe)}
+          </ul>
+        </div>
+        <div className="instructions">
+          <h4> Modo de preparo </h4>
+          <p data-testid="instructions">
+            {recipe.strInstructions}
+          </p>
         </div>
         {recipeType === 'meals' && (
           <iframe
@@ -79,11 +136,29 @@ export default function RecipeDetails() {
             src={ `https://www.youtube.com/embed/${videoId}` }
           />
         )}
+        <div className="recomendationContainer">
+          <Carousel>
+            {recomended ? renderRecomendedItens(recipeType) : null }
+          </Carousel>
+        </div>
+        <div className="btnStartRecipe">
+          <button
+            style={ { position: 'fixed', bottom: '0' } }
+            type="button"
+            data-testid="start-recipe-btn"
+          >
+            Start Recipe
+          </button>
+        </div>
       </div>
     );
   };
 
   return (
-    <div>{context.apiResults[type] ? renderMealOrDrink(type) : 'Loading'}</div>
+    <div>
+      <div className="detailsContainer">
+        {context.apiResults[type] ? renderMealOrDrink(type) : 'Loading'}
+      </div>
+    </div>
   );
 }

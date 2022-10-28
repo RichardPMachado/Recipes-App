@@ -62,8 +62,6 @@ function AppProvider({ children }) {
     }
   }, [endpoint, filterEndpoint]);
 
-  console.log(apiResults);
-
   const contexto = useMemo(() => ({
     apiResults,
     endpoint,
