@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 export default function Login() {
   // const { email, handleEmail, password } = useContext(AppContext);
@@ -45,14 +46,15 @@ export default function Login() {
         placeholder="Password"
         onChange={ handlePassword }
       />
-      <button
+      <Button
+        variant="primary"
         type="submit"
         data-testid="login-submit-btn"
         disabled={ isDisabled }
         onClick={ handleClick }
       >
         Enter
-      </button>
+      </Button>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import Carousel from 'react-bootstrap/Carousel';
+// import Button from 'react-bootstrap/Button';
 import AppContext from '../Context/AppContext';
 
 export default function RecipeDetails() {
@@ -49,10 +51,11 @@ export default function RecipeDetails() {
     const recomendationToRender = 6;
     recipeType = recipeType === 'drinks' ? 'meals' : 'drinks';
     return recomended[recipeType].map((iten, index) => index < recomendationToRender && (
-      <div
+      <Carousel.Item
         key={ index }
         data-testid={ `${index}-recommendation-card` }
         className="recommendationcard"
+        data-interval="false"
       >
         <h4
           data-testid={ `${index}-recommendation-title` }
@@ -64,8 +67,9 @@ export default function RecipeDetails() {
           data-testid="recipe-photo"
           src={ recipeType === 'meals' ? iten.strMealThumb : iten.strDrinkThumb }
           alt={ recipeType === 'meals' ? iten.strMeal : iten.strDrink }
+          width="10px"
         />
-      </div>
+      </Carousel.Item>
     ));
   };
 
@@ -105,7 +109,11 @@ export default function RecipeDetails() {
           <img
             className="recipeDetailsImg"
             data-testid="recipe-photo"
-            src={ recipeType === 'meals' ? recipe.strMealThumb : recipe.strDrinkThumb }
+            src={
+              recipeType === 'meals' ? recipe
+                .strMealThumb : recipe
+                .strDrinkThumb
+            }
             alt={ recipeType === 'meals' ? recipe.strMeal : recipe.strDrink }
           />
         </div>
@@ -129,15 +137,28 @@ export default function RecipeDetails() {
           />
         )}
         <div className="recomendationContainer">
-          {renderRecomendedItens(recipeType)}
+          <Carousel>
+            {renderRecomendedItens(recipeType)}
+          </Carousel>
+        </div>
+        <div className="btnStartRecipe">
+          <button
+            style={ { position: 'fixed', bottom: '0' } }
+            type="button"
+            data-testid="start-recipe-btn"
+          >
+            Start Recipe
+          </button>
         </div>
       </div>
     );
   };
 
   return (
-    <div className="detailsContainer">
-      {context.apiResults[type] ? renderMealOrDrink(type) : 'Loading'}
+    <div>
+      <div className="detailsContainer">
+        {context.apiResults[type] ? renderMealOrDrink(type) : 'Loading'}
+      </div>
     </div>
   );
 }
