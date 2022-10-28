@@ -10,6 +10,7 @@ function AppProvider({ children }) {
   const [apiResults, setApiResults] = useState([]);
   // const [drinkEndpoint, setDrinkEndpoint] = useState();
   const [endpoint, setEndpoint] = useState(null);
+  const [filterEndpoint, setFilterEndpoint] = useState(null);
 
   // handleInput = ({ target }) => {
   //   const { name, value } = target;
@@ -59,16 +60,22 @@ function AppProvider({ children }) {
     if (endpoint !== null) {
       requestAPI();
     }
-  }, [endpoint]);
+  }, [endpoint, filterEndpoint]);
 
   console.log(apiResults);
 
   const contexto = useMemo(() => ({
     apiResults,
+    endpoint,
+    filterEndpoint,
     themeaEndpoint,
     drinksEndpoint,
+    setEndpoint,
+    setFilterEndpoint,
   }), [
     apiResults,
+    filterEndpoint,
+    endpoint,
   ]);
 
   return (
