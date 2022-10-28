@@ -21,4 +21,5 @@ test('verifica se botões de filtros drincks aparecem na tela', async () => {
   expect(btnOrdinaryDrink).toBeInTheDocument();
   expect(global.fetch).toHaveBeenCalledTimes(4);
   userEvent.click(btnOrdinaryDrink);
+  userEvent.click(btnOrdinaryDrink);
 });
