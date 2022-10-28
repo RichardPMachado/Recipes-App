@@ -23,5 +23,6 @@ describe('Testando componentes de Recipes.js', () => {
     expect(btnBeef).toBeInTheDocument();
     expect(global.fetch).toHaveBeenCalledTimes(2);
     userEvent.click(btnBeef);
+    userEvent.click(btnBeef);
   });
 });
