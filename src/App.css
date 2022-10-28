@@ -1,7 +1,7 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 li {
@@ -10,32 +10,39 @@ li {
 
 .detailsContainer {
   border: 2px solid black;
-  width: 100vw;
-  height: 100vh;
   display: flex;
+  height: 100vh;
   justify-content: center;
+  width: 100vw;
 }
 
 .recipeContainer {
   background-color: lightgrey;
-  display: inline-block;
   border: 2px solid red;
-  width: 100%;
-  height: 100%;
+  display: inline-block;
   flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
 }
 
 .detailsHeader {
-  /* margin-top: 2%;*/
+
+  /* margin-top: 2%; */
+
   /* display: inline-block;  */
   border: 2px solid green;
+
   /* align-self:flex-start; */
   position: absolute;
-  width: 80%;
   right: 0;
+  width: 80%;
+
   /* flex-direction: column; */
+
   /* align-items: center; */
+
   /* height: 12%; */
+
   /* justify-content: center; */
 }
 
@@ -47,65 +54,79 @@ li {
   align-self:flex-start;
   justify-content: center;
   align-items: center;
-  height: 20%; 
+  height: 20%;
 } */
 
 .recipeDetailsImg {
+
   /* display: inline-block; */
   border: 2px solid blue;
   width: 15%;
 }
 
 .ingredients {
-  display: inline-block;
-  border: 2px solid green;
-  flex-direction: column;
   align-items: center;
+  border: 2px solid green;
+  display: inline-block;
+  flex-direction: column;
   gap: 20px;
   width: 50%;
+
   /* height: 40%; */
 }
 
 .instructions {
-  display: inline-block;
-  border: 2px solid green;
-  width: 50%;
-   /* height: 40%; */
-  flex-direction: column;
   align-items: center;
+  border: 2px solid green;
+  display: inline-block;
+
+  /* height: 40%; */
+
+  /* flex-direction: column; */
+
   /* justify-content: right; */
-  flex-wrap: nowrap;
+  flex-flow: column nowrap;
+  width: 50%;
 }
 
 .instructions p {
-  font-size: 70%;
   flex-wrap: nowrap;
+  font-size: 70%;
 
 }
 
 .recomendationContainer {
-  display: flex;
+
   /* position: relative; */
   border: 2px solid blue;
-  width: 100%;
-  height: 30%;
+  display: flex;
+
+  /* flex-direction: row; */
+
   /* overflow-x: hidden; */
-  flex-wrap: wrap;
-  flex-direction: row;
+  flex-flow: row wrap;
+  height: 30%;
+  width: 100%;
+
   /* justify-content: center; */
 }
 
 .recommendationcard {
+
   /* display: flex; */
+
   /* flex-direction: row; */
   border: 2px solid red;
-  /* flex-direction: row; */
-  /* align-items: center; */
-  /* justify-content: center; */
-  width: 30%;
+  flex-basis: 50%;
   margin: 0;
   padding: 0;
-  flex-basis: 50%;
+
+  /* flex-direction: row; */
+
+  /* align-items: center; */
+
+  /* justify-content: center; */
+  width: 30%;
 }
 
 .recommendationcard h4 {
@@ -114,13 +135,13 @@ li {
 }
 
 .recomendedDetailsImg {
-  width: 95%;
   height: 70%;
+  width: 95%;
 }
 
 .btnStartRecipe {
-  position: fixed;
   bottom: 0;
+  position: fixed;
 }
 
 /* .meals {

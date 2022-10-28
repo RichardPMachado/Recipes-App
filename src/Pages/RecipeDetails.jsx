@@ -11,8 +11,6 @@ export default function RecipeDetails() {
   const [type, setType] = useState();
   const [recomended, setRecomended] = useState();
 
-  console.log(recomended);
-
   useEffect(() => {
     const setRecipeEndpoint = () => {
       const { location: { pathname } } = history;
@@ -25,13 +23,15 @@ export default function RecipeDetails() {
   }, [context, history, params]);
 
   useEffect(() => {
-    const fetchRecomendations = async (recomendationFor) => {
-      const ENDPOINT = recomendationFor === 'drinks' ? 'themealdb' : 'thecocktaildb';
-      const response = await fetch(`https://www.${ENDPOINT}.com/api/json/v1/1/search.php?s=`);
-      const recomendation = await response.json();
-      setRecomended(recomendation);
-    };
-    fetchRecomendations(type);
+    if (type) {
+      const fetchRecomendations = async (recomendationFor) => {
+        const ENDPOINT = recomendationFor === 'drinks' ? 'themealdb' : 'thecocktaildb';
+        const response = await fetch(`https://www.${ENDPOINT}.com/api/json/v1/1/search.php?s=`);
+        const recomendation = await response.json();
+        setRecomended(recomendation);
+      };
+      fetchRecomendations(type);
+    }
   }, [type]);
 
   const ingredientsAndMeasure = (obj) => {
@@ -138,7 +138,7 @@ export default function RecipeDetails() {
         )}
         <div className="recomendationContainer">
           <Carousel>
-            {renderRecomendedItens(recipeType)}
+            {recomended ? renderRecomendedItens(recipeType) : null }
           </Carousel>
         </div>
         <div className="btnStartRecipe">
