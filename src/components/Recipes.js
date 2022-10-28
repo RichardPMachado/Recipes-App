@@ -5,18 +5,25 @@ import AppContext from '../Context/AppContext';
 function Recipes() {
   const MAX_FILTERS = 5;
   const [categoryResults, setCategoryResults] = useState([]);
+  const [currentFilter, setCurrentFilter] = useState('');
   const { setFilterEndpoint, setEndpoint } = useContext(AppContext);
   const { location } = useHistory();
-
-  const handleClick = ({ target }) => {
-    console.log(target.name);
-    setFilterEndpoint(target.name);
-  };
 
   const handleClickAll = () => {
     console.log(null);
     setEndpoint(null);
     setFilterEndpoint(null);
+  };
+
+  const handleClick = ({ target }) => {
+    if (currentFilter !== target.name) {
+      setFilterEndpoint(target.name);
+      setCurrentFilter(target.name);
+    } else {
+      setEndpoint(null);
+      setFilterEndpoint(null);
+      setCurrentFilter('');
+    }
   };
 
   useEffect(() => {
@@ -49,7 +56,6 @@ function Recipes() {
         type="button"
         data-testid="All-category-filter"
         onClick={ handleClickAll }
-        // name={ null }
       >
         All
       </button>

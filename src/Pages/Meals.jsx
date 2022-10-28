@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AppContext from '../Context/AppContext';
@@ -19,16 +20,25 @@ function Meals() {
     if (apiResults.meals) {
       return apiResults.meals.filter((meal, index) => index < MEALSTORENDER)
         .map((meal, key) => (
-          <div key={ key } data-testid={ `${key}-recipe-card` }>
-            <div data-testid={ `${key}-card-name` }>
-              {meal.strMeal}
+          <Link
+            data-testid={ `${key}-recipe-card` }
+            to={ { pathname: `/meals/${meal.idMeal}` } }
+            key={ key }
+          >
+            <div
+              id={ meal.idMeal }
+            >
+              <div data-testid={ `${key}-card-name` }>
+                {meal.strMeal}
+              </div>
+              <img
+                src={ meal.strMealThumb }
+                alt={ meal.strMeal }
+                data-testid={ `${key}-card-img` }
+                width="350"
+              />
             </div>
-            <img
-              src={ meal.strMealThumb }
-              alt={ meal.strMeal }
-              data-testid={ `${key}-card-img` }
-            />
-          </div>
+          </Link>
         ));
     }
     return null;
