@@ -1,26 +1,29 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 // import Button from 'react-bootstrap/Button';
 import AppContext from '../Context/AppContext';
 
+const copy = require('clipboard-copy');
+
 export default function RecipeDetails() {
   const params = useParams();
+  const { id } = params;
   const context = useContext(AppContext);
   const history = useHistory();
   const [type, setType] = useState();
   const [recomended, setRecomended] = useState();
+  const [linkCopied, setlinkCopied] = useState(false);
 
   useEffect(() => {
     const setRecipeEndpoint = () => {
       const { location: { pathname } } = history;
-      const { id } = params;
       return pathname === `/drinks/${id}`
         ? (context.drinksEndpoint('recipe-id', id), setType('drinks'))
         : (context.themeaEndpoint('recipe-id', id), setType('meals'));
     };
     setRecipeEndpoint();
-  }, [context, history, params]);
+  }, [context, history, id]);
 
   useEffect(() => {
     if (type) {
@@ -33,6 +36,21 @@ export default function RecipeDetails() {
       fetchRecomendations(type);
     }
   }, [type]);
+
+  const isDoneRecipe = () => {
+    const doneRecipes = localStorage.getItem('doneRecipes');
+    if (doneRecipes) {
+      return JSON.parse(doneRecipes).some((recipe) => recipe.id === id);
+    }
+  };
+
+  const isInProgressRecipes = (recipeType) => {
+    const inProgressRecipes = localStorage.getItem('inProgressRecipes');
+    if (inProgressRecipes) {
+      return Object.keys(JSON.parse(inProgressRecipes)[recipeType])
+        .some((recipe) => recipe === id);
+    }
+  };
 
   const ingredientsAndMeasure = (obj) => {
     const measureKeys = Object.keys(obj).filter((key) => key.startsWith('strMeasure'));
@@ -142,13 +160,61 @@ export default function RecipeDetails() {
           </Carousel>
         </div>
         <div className="btnStartRecipe">
+          {isInProgressRecipes(type) ? (
+            <button
+              style={ { position: 'fixed', bottom: '0' } }
+              type="button"
+              data-testid="start-recipe-btn"
+              hidden={ isDoneRecipe() }
+            >
+              Continue Recipe
+            </button>
+          ) : (
+            <Link
+              to={ {
+                pathname: `/${type}/${id}/in-progress`,
+              } }
+            >
+              <button
+                z-index={ 10 }
+                style={ { position: 'fixed', bottom: '0' } }
+                type="button"
+                data-testid="start-recipe-btn"
+                hidden={ isDoneRecipe() }
+              >
+                Start Recipe
+              </button>
+            </Link>
+          )}
+        </div>
+        <div className="buttons" style={ { position: 'fixed', top: '0' } }>
           <button
-            style={ { position: 'fixed', bottom: '0' } }
             type="button"
-            data-testid="start-recipe-btn"
+            data-testid="share-btn"
+            onClick={ () => {
+              copy(window.location.href);
+              setlinkCopied(true);
+              setTimeout(() => {
+                setlinkCopied(false);
+              }, '3000');
+            } }
           >
-            Start Recipe
+            Compartilhar
           </button>
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            onClick={ () => context.handlerFavoriteRecipe(
+              context.apiResults[type][0],
+              type,
+              context.isFavoriteRecipe(id),
+            ) }
+          >
+            Favoritar
+          </button>
+        </div>
+        <div>
+          {linkCopied ? 'Link copied!' : null}
         </div>
       </div>
     );
