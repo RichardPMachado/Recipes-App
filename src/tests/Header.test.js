@@ -5,13 +5,13 @@ import userEvent from '@testing-library/user-event';
 // import Header from '../components/Header';
 import Meals from '../Pages/Meals';
 import Drinks from '../Pages/Drinks';
-import Done from '../Pages/Done';
 import Favorite from '../Pages/Favorite';
 import Recipe from '../Pages/Recipe';
 
 // import NotFound from '../Pages/NotFound';
 import RecipeInProgress from '../components/RecipeInProgress';
 import renderWithRouterAndContext from './helper/renderWithRouterAndContext';
+import DoneRecipes from '../Pages/DoneRecipes';
 
 describe('verificar componente Header', () => {
   const page = 'page-title';
@@ -51,7 +51,7 @@ describe('verificar componente Header', () => {
     expect(searchInput).toBeInTheDocument();
   });
   it('Verifica se os botões e o input estão na tela ao renderizar a pages Done', () => {
-    render(<Done />);
+    render(<DoneRecipes />);
 
     const pageTitle = screen.getByTestId(page);
     expect(pageTitle).toBeInTheDocument();
