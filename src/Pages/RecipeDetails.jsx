@@ -1,6 +1,8 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 // import Button from 'react-bootstrap/Button';
 import AppContext from '../Context/AppContext';
 
@@ -14,6 +16,7 @@ export default function RecipeDetails() {
   const [type, setType] = useState();
   const [recomended, setRecomended] = useState();
   const [linkCopied, setlinkCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     const setRecipeEndpoint = () => {
@@ -112,14 +115,10 @@ export default function RecipeDetails() {
     return (
       <div className="recipeContainer">
         <div className="detailsHeader">
-          <h2
-            data-testid="recipe-title"
-          >
+          <h2 data-testid="recipe-title">
             {recipeType === 'meals' ? recipe.strMeal : recipe.strDrink}
           </h2>
-          <h4
-            data-testid="recipe-category"
-          >
+          <h4 data-testid="recipe-category">
             {recipeType === 'meals' ? recipe.strCategory : recipe.strAlcoholic}
           </h4>
         </div>
@@ -152,8 +151,7 @@ export default function RecipeDetails() {
             data-testid="video"
             title={ recipeType === 'meals' ? recipe.strMeal : recipe.strDrink }
             src={ `https://www.youtube.com/embed/${videoId}` }
-          />
-        )}
+          />)}
         <div className="recomendationContainer">
           <Carousel>
             {recomended ? renderRecomendedItens(recipeType) : null }
@@ -204,13 +202,20 @@ export default function RecipeDetails() {
           <button
             type="button"
             data-testid="favorite-btn"
-            onClick={ () => context.handlerFavoriteRecipe(
-              context.apiResults[type][0],
-              type,
-              context.isFavoriteRecipe(id),
-            ) }
+            src={ context.isFavoriteRecipe(id) ? blackHeartIcon : whiteHeartIcon }
+            onClick={ () => {
+              setIsFavorite(!isFavorite);
+              return context.handlerFavoriteRecipe(
+                context.apiResults[type][0],
+                type,
+                context.isFavoriteRecipe(id),
+              );
+            } }
           >
-            Favoritar
+            <img
+              src={ context.isFavoriteRecipe(id) ? blackHeartIcon : whiteHeartIcon }
+              alt="heart-icon"
+            />
           </button>
         </div>
         <div>

@@ -73,7 +73,6 @@ function AppProvider({ children }) {
 
   const handlerFavoriteRecipe = (recipe, type, isFavorite) => {
     if (!isFavorite) {
-      const favoritesRecipes = localStorage.getItem('favoriteRecipes');
       const newFavorite = {
         id: type === 'meals' ? recipe.idMeal : recipe.idDrink,
         type: type === 'meals' ? 'meal' : 'drink',
@@ -83,15 +82,23 @@ function AppProvider({ children }) {
         name: type === 'meals' ? recipe.strMeal : recipe.strDrink,
         image: type === 'meals' ? recipe.strMealThumb : recipe.strDrinkThumb,
       };
-      if (favoritesRecipes) {
-        console.log('ja existe');
-        return localStorage
-          .setItem('favoriteRecipes', JSON.stringify([...JSON.parse(favoritesRecipes),
-            newFavorite]));
-      }
+      // if (favoritesRecipes) {
+      //   console.log('ja existe');
+      //   return localStorage
+      //     .setItem('favoriteRecipes', JSON.stringify([...JSON.parse(favoritesRecipes),
+      //       newFavorite]));
+      // }
       console.log('primeira entrada');
       return localStorage
         .setItem('favoriteRecipes', JSON.stringify([newFavorite]));
+    }
+    const favoritesRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favoritesRecipes.length !== 0) {
+      const NewFavoriteStorage = favoritesRecipes
+        .filter((e) => e.id !== (recipe.idDrink || recipe.idMeal));
+      console.log('ja existe', NewFavoriteStorage);
+      return localStorage
+        .setItem('favoriteRecipes', JSON.stringify(NewFavoriteStorage));
     }
   };
 
