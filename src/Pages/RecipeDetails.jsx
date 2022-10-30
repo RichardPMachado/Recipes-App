@@ -16,9 +16,9 @@ export default function RecipeDetails() {
   const [type, setType] = useState();
   const [recomended, setRecomended] = useState();
   const [linkCopied, setlinkCopied] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
+    context.isFavoriteRecipe(id);
     const setRecipeEndpoint = () => {
       const { location: { pathname } } = history;
       return pathname === `/drinks/${id}`
@@ -202,18 +202,14 @@ export default function RecipeDetails() {
           <button
             type="button"
             data-testid="favorite-btn"
-            src={ context.isFavoriteRecipe(id) ? blackHeartIcon : whiteHeartIcon }
-            onClick={ () => {
-              setIsFavorite(!isFavorite);
-              return context.handlerFavoriteRecipe(
-                context.apiResults[type][0],
-                type,
-                context.isFavoriteRecipe(id),
-              );
-            } }
+            src={ context.favorite ? blackHeartIcon : whiteHeartIcon }
+            onClick={ () => context.handlerFavoriteRecipe(
+              context.apiResults[type][0],
+              type,
+            ) }
           >
             <img
-              src={ context.isFavoriteRecipe(id) ? blackHeartIcon : whiteHeartIcon }
+              src={ context.favorite ? blackHeartIcon : whiteHeartIcon }
               alt="heart-icon"
             />
           </button>

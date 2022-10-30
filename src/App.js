@@ -5,13 +5,12 @@ import Login from './Pages/Login';
 import Meals from './Pages/Meals';
 import AppProvider from './Context/AppProvider';
 import Profile from './Pages/Profile';
-import DoneRecipes from './Pages/DoneRecipes';
 import Favorite from './Pages/Favorite';
 import RecipeInProgress from './components/RecipeInProgress';
 import NotFound from './Pages/NotFound';
 // import Recipe from './Pages/Recipe';
 import RecipeDetails from './Pages/RecipeDetails';
-import './App.css';
+import DoneRecipes from './Pages/DoneRecipes';
 
 function App() {
   return (
@@ -25,12 +24,12 @@ function App() {
 
           <Route
             exact
-            path="/meals/:id/in-progress"
+            path="/meals/:id-da-receita/in-progress"
             component={ RecipeInProgress }
           />
           <Route
             exact
-            path="/drinks/:id/in-progress"
+            path="/drinks/:id-da-receita/in-progress"
             component={ RecipeInProgress }
           />
 
