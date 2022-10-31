@@ -110,6 +110,7 @@ function AppProvider({ children }) {
     filterEndpoint,
     endpoint,
     favorite,
+    handlerFavoriteRecipe,
   ]);
 
   return (
