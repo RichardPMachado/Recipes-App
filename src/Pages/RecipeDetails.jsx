@@ -5,6 +5,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 // import Button from 'react-bootstrap/Button';
 import AppContext from '../Context/AppContext';
+import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
@@ -197,7 +198,10 @@ export default function RecipeDetails() {
               }, '3000');
             } }
           >
-            Compartilhar
+            <img
+              src={ shareIcon }
+              alt="share-icon"
+            />
           </button>
           <button
             type="button"

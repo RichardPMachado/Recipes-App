@@ -7,8 +7,6 @@ import AppProvider from './Context/AppProvider';
 import Profile from './Pages/Profile';
 import Favorite from './Pages/Favorite';
 import RecipeInProgress from './components/RecipeInProgress';
-import NotFound from './Pages/NotFound';
-// import Recipe from './Pages/Recipe';
 import RecipeDetails from './Pages/RecipeDetails';
 import DoneRecipes from './Pages/DoneRecipes';
 
@@ -24,12 +22,12 @@ function App() {
 
           <Route
             exact
-            path="/meals/:id-da-receita/in-progress"
+            path="/meals/:id/in-progress"
             component={ RecipeInProgress }
           />
           <Route
             exact
-            path="/drinks/:id-da-receita/in-progress"
+            path="/drinks/:id/in-progress"
             component={ RecipeInProgress }
           />
 
@@ -40,7 +38,7 @@ function App() {
           <Route exact path="/done-recipes" component={ DoneRecipes } />
 
           <Route exact path="/favorite-recipes" component={ Favorite } />
-          <Route path="*" component={ NotFound } />
+
         </Switch>
       </BrowserRouter>
     </AppProvider>
