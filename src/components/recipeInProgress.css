@@ -1,5 +1,8 @@
+/* .checkbox-container input + label {
+  text-decoration: none solid rgb(33, 37, 41);
+} */
 
-
-.checkbox-container input:checked + label{
-  text-decoration: line-through solid rgb(33, 37, 41);
+.checkbox-container input:checked + label {
+  text-decoration: line-through solid rgb(0, 0, 0);
 }
+

@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useEffect,
   useMemo, useState,
   // useState,
@@ -67,7 +68,7 @@ function AppProvider({ children }) {
     return setFavorite(false);
   };
 
-  const handlerFavoriteRecipe = (recipe, type) => {
+  const handlerFavoriteRecipe = useCallback((recipe, type) => {
     const favoritesRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
     const newfavoriteBool = !favorite;
     const newFavorite = {
@@ -92,7 +93,7 @@ function AppProvider({ children }) {
     }
     setFavorite(newfavoriteBool);
     return localStorage.setItem('favoriteRecipes', JSON.stringify([newFavorite]));
-  };
+  });
 
   const contexto = useMemo(() => ({
     apiResults,

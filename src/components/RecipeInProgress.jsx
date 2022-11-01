@@ -96,25 +96,59 @@ export default function RecipeDetails() {
     ));
   };
 
+  const verifyConditionClass = (value) => {
+    if (pathname === `/meals/${id}/in-progress`) {
+      return inProgressRecipes?.meals[id].some((el) => el === value)
+        ? 'done'
+        : '';
+    }
+    return inProgressRecipes?.drinks[id].some((el) => el === value)
+      ? 'done'
+      : '';
+  };
+
+  const verifyConditionChecked = (value) => {
+    if (pathname === `/meals/${id}/in-progress`) {
+      return inProgressRecipes?.meals[id].some((el) => el === value);
+    }
+    return inProgressRecipes?.drinks[id].some((el) => el === value);
+  };
+
   const renderIngredients = (obj) => {
     const { ingredients, measures } = ingredientsAndMeasure(obj);
-    return ingredients.map((iten, index) => (
-      <div
-        className="checkbox-container"
-        key={ index }
-        data-testid={ `${index}-ingredient-step` }
-      >
-        <input
-          id={ iten.toLowerCase() }
-          type="checkbox"
-        />
+    return ingredients?.map((iten, index) => (
+      <div key={ `${index}-${iten}` }>
         <label
-          id={ iten.toLowerCase() }
-          htmlFor={ iten.toLowerCase() }
+          htmlFor={ iten }
+          data-testid={ `${index}-ingredient-step` }
+          className={ verifyConditionClass(e.recipesProduct) }
         >
+          <input
+            data-testid={ `${index}-ingredient-name-and-measure` }
+            type="checkbox"
+            name={ e.recipesProduct }
+            onChange={ (event) => handleTask(event, pathname, id) }
+            defaultChecked={ verifyConditionChecked(iten) }
+            id="inputs"
+          />
           { ` ${iten} ${measures[index]}` }
         </label>
       </div>
+      // <div
+      //   className="checkbox-container"
+      //   key={ index }
+      //   data-testid={ `${index}-ingredient-step` }
+      // >
+      //   <input
+      //     id={ iten.toLowerCase() }
+      //     type="checkbox"
+      //   />
+      //   <label
+      //     htmlFor={ iten.toLowerCase() }
+      //   >
+      //     { ` ${iten} ${measures[index]}` }
+      //   </label>
+      // </div>
     ));
   };
 
