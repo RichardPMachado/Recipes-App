@@ -1,8 +1,8 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
-import Carousel from 'react-bootstrap/Carousel';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+// import verifyRecipes from '../assets/verifyRecipes';
 // import Button from 'react-bootstrap/Button';
 import AppContext from '../Context/AppContext';
 import shareIcon from '../images/shareIcon.svg';
@@ -16,9 +16,11 @@ export default function RecipeDetails() {
   const context = useContext(AppContext);
   const history = useHistory();
   const [type, setType] = useState();
-  const [recomended, setRecomended] = useState();
   const [linkCopied, setlinkCopied] = useState(false);
-
+  // const [ingredientsLength, setIngredientsLength] = useState(0);
+  // const [checkedState, setCheckedState] = useState(
+  //   new Array(ingredientsLength).fill(false),
+  // );
   useEffect(() => {
     context.isFavoriteRecipe(id);
     const setRecipeEndpoint = () => {
@@ -28,19 +30,19 @@ export default function RecipeDetails() {
         : (context.themeaEndpoint('recipe-id', id), setType('meals'));
     };
     setRecipeEndpoint();
-  }, [context, history, id]);
+  }, []);
 
-  useEffect(() => {
-    if (type) {
-      const fetchRecomendations = async (recomendationFor) => {
-        const ENDPOINT = recomendationFor === 'drinks' ? 'themealdb' : 'thecocktaildb';
-        const response = await fetch(`https://www.${ENDPOINT}.com/api/json/v1/1/search.php?s=`);
-        const recomendation = await response.json();
-        setRecomended(recomendation);
-      };
-      fetchRecomendations(type);
-    }
-  }, [type]);
+  // useEffect(() => {
+  //   if (type) {
+  //     const fetchRecomendations = async (recomendationFor) => {
+  //       const ENDPOINT = recomendationFor === 'drinks' ? 'themealdb' : 'thecocktaildb';
+  //       const response = await fetch(`https://www.${ENDPOINT}.com/api/json/v1/1/search.php?s=`);
+  //       const recomendation = await response.json();
+  //       setRecomended(recomendation);
+  //     };
+  //     fetchRecomendations(type);
+  //   }
+  // }, [type]);
 
   const isDoneRecipe = () => {
     const doneRecipes = localStorage.getItem('doneRecipes');
@@ -49,13 +51,32 @@ export default function RecipeDetails() {
     }
   };
 
-  const isInProgressRecipes = (recipeType) => {
+  // const checkListIten = (iten) => {
+  //   const inProgressRecipes = localStorage.getItem('inProgressRecipes');
+  //   const usedItens = JSON.parse(inProgressRecipes);
+  //   return usedItens[type][id]?.includes(iten);
+  // };
+
+  const storageInProgressRecipe = (iten) => {
     const inProgressRecipes = localStorage.getItem('inProgressRecipes');
-    if (inProgressRecipes) {
-      return Object.keys(JSON.parse(inProgressRecipes)[recipeType])
-        .some((recipe) => recipe === id);
+    const usedItens = JSON.parse(inProgressRecipes);
+    const usedItenBool = usedItens[type][id].some((i) => i === iten);
+    if (usedItenBool) {
+      const index = usedItens[type][id].indexOf(iten);
+      usedItens[type][id].splice(index, 1);
+      return localStorage.setItem('inProgressRecipes', JSON.stringify(usedItens));
     }
+    usedItens[type][id] = [...usedItens[type][id], iten];
+    return localStorage.setItem('inProgressRecipes', JSON.stringify(usedItens));
   };
+
+  // const isInProgressRecipes = (recipeType) => {
+  //   const inProgressRecipes = localStorage.getItem('inProgressRecipes');
+  //   if (inProgressRecipes) {
+  //     return Object.keys(JSON.parse(inProgressRecipes)[recipeType])
+  //       .some((recipe) => recipe === id);
+  //   }
+  // };
 
   const ingredientsAndMeasure = (obj) => {
     const measureKeys = Object.keys(obj).filter((key) => key.startsWith('strMeasure'));
@@ -70,88 +91,50 @@ export default function RecipeDetails() {
     };
   };
 
-  const renderRecomendedItens = (recipeType) => {
-    const recomendationToRender = 6;
-    recipeType = recipeType === 'drinks' ? 'meals' : 'drinks';
-    return recomended[recipeType].map((iten, index) => index < recomendationToRender && (
-      <Carousel.Item
-        key={ index }
-        data-testid={ `${index}-recommendation-card` }
-        className="recommendationcard"
-        data-interval="false"
-      >
-        <h4
-          data-testid={ `${index}-recommendation-title` }
-        >
-          {recipeType === 'meals' ? iten.strMeal : iten.strDrink}
-        </h4>
-        <img
-          className="recomendedDetailsImg"
-          data-testid="recipe-photo"
-          src={ recipeType === 'meals' ? iten.strMealThumb : iten.strDrinkThumb }
-          alt={ recipeType === 'meals' ? iten.strMeal : iten.strDrink }
-          width="10px"
-        />
-      </Carousel.Item>
-    ));
+  const handleChecked = (position, iten) => {
+    const newChecked = checkedState
+      .map((isChecked, index) => (index === position ? !isChecked : isChecked));
+    setCheckedState(newChecked);
+    storageInProgressRecipe(iten);
   };
+  // const verifyConditionClass = (value) => {
+  //   if (pathname === `/meals/${id}/in-progress`) {
+  //     return inProgressRecipes?.meals[id].some((el) => el === value)
+  //       ? 'done'
+  //       : '';
+  //   }
+  //   return inProgressRecipes?.drinks[id].some((el) => el === value)
+  //     ? 'done'
+  //     : '';
+  // };
 
-  const verifyConditionClass = (value) => {
-    if (pathname === `/meals/${id}/in-progress`) {
-      return inProgressRecipes?.meals[id].some((el) => el === value)
-        ? 'done'
-        : '';
-    }
-    return inProgressRecipes?.drinks[id].some((el) => el === value)
-      ? 'done'
-      : '';
-  };
-
-  const verifyConditionChecked = (value) => {
-    if (pathname === `/meals/${id}/in-progress`) {
-      return inProgressRecipes?.meals[id].some((el) => el === value);
-    }
-    return inProgressRecipes?.drinks[id].some((el) => el === value);
-  };
+  const verifyConditionChecked = (value, ingredientes) => !(ingredientes
+    .some((el) => el === value));
 
   const renderIngredients = (obj) => {
     const { ingredients, measures } = ingredientsAndMeasure(obj);
+
     return ingredients?.map((iten, index) => (
-      <div key={ `${index}-${iten}` }>
+      <div
+        key={ index }
+      >
         <label
-          htmlFor={ iten }
           data-testid={ `${index}-ingredient-step` }
-          className={ verifyConditionClass(e.recipesProduct) }
+          id={ iten.toLowerCase() }
+          htmlFor={ iten.toLowerCase() }
         >
           <input
             data-testid={ `${index}-ingredient-name-and-measure` }
+            id={ iten.toLowerCase() }
             type="checkbox"
-            name={ e.recipesProduct }
-            onChange={ (event) => handleTask(event, pathname, id) }
-            defaultChecked={ verifyConditionChecked(iten) }
-            id="inputs"
+            onChange={ () => handleChecked(index, iten) }
+            defaultChecked={ verifyConditionChecked(iten, ingredients) }
           />
           { ` ${iten} ${measures[index]}` }
         </label>
       </div>
-      // <div
-      //   className="checkbox-container"
-      //   key={ index }
-      //   data-testid={ `${index}-ingredient-step` }
-      // >
-      //   <input
-      //     id={ iten.toLowerCase() }
-      //     type="checkbox"
-      //   />
-      //   <label
-      //     htmlFor={ iten.toLowerCase() }
-      //   >
-      //     { ` ${iten} ${measures[index]}` }
-      //   </label>
-      // </div>
     ));
   };
-
   const renderMealOrDrink = (recipeType) => {
     const recipe = context.apiResults[recipeType][0];
     const sliceUrl = 'https://www.youtube.com/watch?v='.length;
@@ -251,7 +234,6 @@ export default function RecipeDetails() {
       </div>
     );
   };
-
   return (
     <div>
       <div className="detailsContainer">
