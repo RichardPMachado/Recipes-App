@@ -6,7 +6,7 @@ import Meals from './Pages/Meals';
 import AppProvider from './Context/AppProvider';
 import Profile from './Pages/Profile';
 import Done from './Pages/Done';
-import Favorite from './Pages/Favorite';
+import Favorite from './components/FavoriteRecipes';
 import RecipeInProgress from './components/RecipeInProgress';
 import NotFound from './Pages/NotFound';
 // import Recipe from './Pages/Recipe';
