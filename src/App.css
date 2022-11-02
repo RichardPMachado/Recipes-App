@@ -148,6 +148,14 @@ li {
   position: fixed;
 }
 
+.favoriteRecipes {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
 /* .meals {
   align-items: center;
   background: #0fa36b;
