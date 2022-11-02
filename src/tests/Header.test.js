@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 // import Header from '../components/Header';
 import Meals from '../Pages/Meals';
 import Drinks from '../Pages/Drinks';
-import Favorite from '../Pages/Favorite';
+import Favorite from '../components/FavoriteRecipes';
 import Recipe from '../Pages/Recipe';
 
 // import NotFound from '../Pages/NotFound';
