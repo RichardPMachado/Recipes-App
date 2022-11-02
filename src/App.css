@@ -1,4 +1,162 @@
-.meals {
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+.detailsContainer {
+  border: 2px solid black;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+.recipeContainer {
+  background-color: lightgrey;
+  border: 2px solid red;
+  display: inline-block;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+}
+
+.detailsHeader {
+
+  /* margin-top: 2%; */
+
+  /* display: inline-block;  */
+  border: 2px solid green;
+
+  /* align-self:flex-start; */
+  position: absolute;
+  right: 0;
+  width: 80%;
+
+  /* flex-direction: column; */
+
+  /* align-items: center; */
+
+  /* height: 12%; */
+
+  /* justify-content: center; */
+}
+
+/* .imageContent {
+  display: flex;
+  border: 2px solid grey;
+  width: 100%;
+  flex-direction: column;
+  align-self:flex-start;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+} */
+
+.recipeDetailsImg {
+
+  /* display: inline-block; */
+  border: 2px solid blue;
+  width: 15%;
+}
+
+.ingredients {
+  align-items: center;
+  border: 2px solid green;
+  display: inline-block;
+  flex-direction: column;
+  gap: 20px;
+  width: 50%;
+
+  /* height: 40%; */
+}
+
+.instructions {
+  align-items: center;
+  border: 2px solid green;
+  display: inline-block;
+
+  /* height: 40%; */
+
+  /* flex-direction: column; */
+
+  /* justify-content: right; */
+  flex-flow: column nowrap;
+  width: 50%;
+}
+
+.instructions p {
+  flex-wrap: nowrap;
+  font-size: 70%;
+
+}
+
+.recomendationContainer {
+
+  /* position: relative; */
+  border: 2px solid blue;
+  display: flex;
+
+  /* flex-direction: row; */
+
+  /* overflow-x: hidden; */
+  flex-flow: row wrap;
+  height: 30%;
+  width: 100%;
+
+  /* justify-content: center; */
+}
+
+.recommendationcard {
+
+  /* display: flex; */
+
+  /* flex-direction: row; */
+  border: 2px solid red;
+  flex-basis: 50%;
+  margin: 0;
+  padding: 0;
+
+  /* flex-direction: row; */
+
+  /* align-items: center; */
+
+  /* justify-content: center; */
+  width: 30%;
+}
+
+.carousel {
+  margin-left: 25%;
+}
+
+.recommendationcard h4 {
+  font-size: small;
+  width: 10%;
+}
+
+.recomendedDetailsImg {
+  height: 70%;
+  width: 95%;
+}
+
+.btnStartRecipe {
+  bottom: 0;
+  position: fixed;
+}
+
+.favoriteRecipes {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+/* .meals {
   align-items: center;
   background: #0fa36b;
   color: #464646;
@@ -8,12 +166,12 @@
   height: 100vh;
   justify-content: center;
   width: 100%;
-}
+} */
 
-.rocksGlass {
+/* .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
-}
+} */
 
 /*
 #iceLeft {
@@ -29,7 +187,7 @@
 }
 */
 
-.meals > .logo {
+/* .meals > .logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;
   font-family: Montserrat , sans-serif;
@@ -65,4 +223,4 @@
   100% {
     transform: rotate(-10deg);
   }
-}
+} */

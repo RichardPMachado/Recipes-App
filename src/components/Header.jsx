@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
-function Header({ title }) {
+function Header({ title, children }) {
   const [isDisabled, setIsDisabled] = useState(false);
   const history = useHistory();
-
+  console.log(children);
   const hendleClickProfile = () => {
     const path = 'profile';
     history.push(path);
@@ -27,11 +28,13 @@ function Header({ title }) {
           <button
             type="button"
             onClick={ handleDisabledInput }
+            data-testid="search-top-btn"
+            src={ searchIcon }
           >
-            <img src={ searchIcon } alt="search" data-testid="search-top-btn" />
+            <img src={ searchIcon } alt="search" />
           </button>
           {isDisabled && (
-            <input type="text" data-testid="search-input" />
+            <SearchBar />
           )}
         </>
       )}
@@ -40,7 +43,7 @@ function Header({ title }) {
 }
 
 Header.propTypes = {
-  title: propTypes.string,
+  title: PropTypes.string,
 }.isRequired;
 
 export default Header;
